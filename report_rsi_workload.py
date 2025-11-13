@@ -11,7 +11,7 @@ import matplotlib.font_manager as fm
 from os import path
 from matplotlib.pyplot import figure
 if 'Sarabun' not in [x.name for x in matplotlib.font_manager.fontManager.ttflist]:
-    matplotlib.font_manager.fontManager.addfont('g:/My Drive/Colab Notebooks/Sarabun-Regular.ttf')
+    matplotlib.font_manager.fontManager.addfont('Sarabun-Regular.ttf')
 matplotlib.rc('font', family='Sarabun')
 
 
