@@ -33,8 +33,8 @@ academic_year = st.radio(
 )
 
 if academic_year == "2568/1":
-    start_date = '6/1/2025'
-    end_date   = '12/10/2025'
+    start_date = '8/5/2025'
+    end_date   = '9/19/2025'
 elif academic_year == "2568/2":
     start_date = '12/12/2025'
     end_date   = '12/30/2025'
