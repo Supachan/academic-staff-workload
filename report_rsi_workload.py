@@ -93,10 +93,10 @@ df = df.reset_index().rename(columns={'index':'ปี'})
 st.write(df)
 
 st.subheader("3. ภาระงานควบคุมวิทยานิพนธ์")
-B = pd.DataFrame(rea).T.fillna(0).astype(int)
-B = B.reset_index().rename(columns={'index':'รายชื่อ'})
-B['รายชื่อ'] = [b.split('อาจารย์ที่ปรึกษาหลัก /  อาจารย์ที่ปรึกษาร่วม [')[1].replace(']','') for b in B['รายชื่อ']]
-B = pd.concat([B['รายชื่อ'],B['Main Advisor'],B['Co advisor']],axis=1)
+B = pd.DataFrame(get_thesis_workload_new(theses)).T
+# B = B.reset_index().rename(columns={'index':'รายชื่อ'})
+# B['รายชื่อ'] = [b.split('อาจารย์ที่ปรึกษาหลัก /  อาจารย์ที่ปรึกษาร่วม [')[1].replace(']','') for b in B['รายชื่อ']]
+# B = pd.concat([B['รายชื่อ'],B['Main Advisor'],B['Co advisor']],axis=1)
 st.write(B)
 
 st.subheader("4. ภาพรวมความก้าวหน้าวิทยานิพนธ์ของนักศึกษา ")

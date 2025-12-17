@@ -182,6 +182,59 @@ def plot_teaching_hours(temp):
     # plt.show()
     st.pyplot(plt.gcf())
 
+def faculty_members():
+    names =  ['นพ.สมเกียรติ ลีละศิธร',
+    'พญ.วัชรา ริ้วไพบูลย์',
+    'ศ.ดร.ทวี  เชื้อสุวรรณทวี',
+    'รศ.ดร.อาดัม นีละไพจิตร',
+    'รศ.ดร.ณัฏฐนียา โตรักษา',
+    'ผศ.ดร.อารี ภาวสุทธิไพศิฐ',
+    'ผศ.ดร.ธีรศักดิ์ ศรีสุรกุล',
+    'ผศ.ดร.เจนจิรา เจนจิตรวาณิช',
+    'ดร.รติรส จันทรสมดี',
+    'ดร.อิศวรา ศิริรุ่งเรือง',
+    'ดร.ธรรม จตุนาม',
+    'ดร.รุจิรา สงขาว',
+    'ดร.ปรเมศวร์ บุญยืน',
+    'ดร.ปกรณ์กิตติ์ ม่วงประสิทธิ์',
+    'ดร.สุนันทา ขลิบทอง',
+    'ดร.วรางคณา รัชตะวรรณ',
+    'ดร.ญาณิศา เนียรนาทตระกูล',
+    'ดร.สุภชาญ ตรัยตรึงศ์สกุล',
+    'ดร.วิษณุ นิตยธรรมกุล',
+    'พฤหัส ศุภจรรยา',
+    'ราษฏร์ บุญญา',
+    'กุลยา ไทรงาม',
+    'ณัฐวิชญ์ ศุภสินธุ์',
+    'พชร นิลมณี',
+    'สิรินทรา ฤทธิเดช',
+    'สร้อยทอง หยกสุริยันต์',
+    'ภัทรานิษฐ สงประชา']
+    return names
+
+
+def get_thesis_workload_new(theses):
+    theses = theses.drop_duplicates(subset=['รหัส (นักศึกษา)'], keep='last')
+    ST = defaultdict(lambda:defaultdict(list))
+    for name in faculty_members():
+        List = f'อาจารย์ที่ปรึกษาหลัก /  อาจารย์ที่ปรึกษาร่วม [{name}]'
+        a = theses[List].value_counts()
+        a = pd.DataFrame(a).reset_index().rename(columns={List:'ad-co'}).iloc[1:]
+        MAIN = a[a['ad-co']=='Main Advisor']['count'].to_list()
+        COAD = a[a['ad-co']=='Co advisor']['count'].to_list()
+        if len(MAIN) == 0 and len(COAD) == 0:
+            pass
+        else:
+            if len(MAIN) == 0: 
+                MAIN = [0]
+            ST[name]['Main Advisor'] = MAIN[0] 
+            if len(COAD) == 0: 
+                COAD = [0]
+            ST[name]['Co advisor'] = COAD[0]
+    return ST
+
+
+
 def plot_teaching_courses(temp1):
     fig = figure(figsize=(6,10))
     names = temp1['name'].to_list()
