@@ -26,46 +26,25 @@ publication = pd.read_csv(publication_url).fillna("")
 theses = pd.read_csv(theses_url).fillna("")
 theses = theses.drop_duplicates(subset=['รหัส (นักศึกษา)'], keep='last')
 
+# new = defaultdict(lambda:defaultdict(list))
 
+# for degree_interest in ['ศิลปศาสตร','ศึกษา','ปริญญาเอก']:
+#     re,rea,ret,rep = get_thesis_workload(theses,degree_interest)
+#     dd = pd.DataFrame(rep).T.fillna('-')
+#     dd = dd.reset_index().rename(columns={'index':'ปีการศึกษา'})
+#     dd = change_degree_name(dd)
+#     new = collect_cells(new,dd)
 
-
-# st.write("ผลงานตีพิมพ์ทางวิชาการในแต่ละปี")
-# publication = pd.read_csv(publication_url).fillna("")
-# publication,df = get_publication(publication)
-# df = df.reset_index().rename(columns={'index':'ปี'})
-
-# st.write(df)
-
-# option = st.selectbox(
-#     'เลือกปีที่ต้องการดูผลงานตีพิมพ์ทางวิชาการ',
-#      df['ปี'])
-
-# 'You selected: ', df.loc[df['ปี'] == option]
-
-# st.write("ชั่วโมงสอนและจำนวนวิชาที่รับผิดชอบ")
-# f = pd.read_csv(mm3_url)
-# t1,t2 = report_mm3(f)
-
-# theses = pd.read_csv(theses_url).fillna("" )
-new = defaultdict(lambda:defaultdict(list))
-
-for degree_interest in ['ศิลปศาสตร','ศึกษา','ปริญญาเอก']:
-    re,rea,ret,rep = get_thesis_workload(theses,degree_interest)
-    dd = pd.DataFrame(rep).T.fillna('-')
-    dd = dd.reset_index().rename(columns={'index':'ปีการศึกษา'})
-    dd = change_degree_name(dd)
-    new = collect_cells(new,dd)
-
-new = grouping_programs(new)
-A = pd.DataFrame(new).T.fillna('-').reset_index().rename(columns={'index':'ปีการศึกษา'})
-A.sort_values(by='ปีการศึกษา', inplace=True)
-A = pd.concat([A['ปีการศึกษา'],
-               A['สอบโครงร่างแล้ว'],
-               A['อยู่ระหว่างขอ IRB'],
-               A['กำลังเก็บข้อมูล'],
-               A['อยู่ระหว่างการวิเคราะห์ข้อมูล'],
-            #    A['สอบป้องกันวิทยานิพนธ์แล้ว'],
-               A['อยู่ระหว่างรอเผยแพร่วิทยานิพนธ์']],axis=1)
+# new = grouping_programs(new)
+# A = pd.DataFrame(new).T.fillna('-').reset_index().rename(columns={'index':'ปีการศึกษา'})
+# A.sort_values(by='ปีการศึกษา', inplace=True)
+# A = pd.concat([A['ปีการศึกษา'],
+#                A['สอบโครงร่างแล้ว'],
+#                A['อยู่ระหว่างขอ IRB'],
+#                A['กำลังเก็บข้อมูล'],
+#                A['อยู่ระหว่างการวิเคราะห์ข้อมูล'],
+#             #    A['สอบป้องกันวิทยานิพนธ์แล้ว'],
+#                A['อยู่ระหว่างรอเผยแพร่วิทยานิพนธ์']],axis=1)
 
 # website:
 st.title('ภาระงานของคณาจารย์ในสถาบันราชสุดาปีการศึกษา 2568')
@@ -94,13 +73,10 @@ st.write(df)
 
 st.subheader("3. ภาระงานควบคุมวิทยานิพนธ์")
 B = pd.DataFrame(get_thesis_workload_new(theses)).T
-# B = B.reset_index().rename(columns={'index':'รายชื่อ'})
-# B['รายชื่อ'] = [b.split('อาจารย์ที่ปรึกษาหลัก /  อาจารย์ที่ปรึกษาร่วม [')[1].replace(']','') for b in B['รายชื่อ']]
-# B = pd.concat([B['รายชื่อ'],B['Main Advisor'],B['Co advisor']],axis=1)
 st.write(B)
 
-st.subheader("4. ภาพรวมความก้าวหน้าวิทยานิพนธ์ของนักศึกษา ")
-st.write(A.reset_index(drop=True))
+st.subheader("4. ภาพรวมความก้าวหน้าวิทยานิพนธ์ของนักศึกษา")
+st.write(get_thesis_progression_summary(theses))
 st.write("หมายเหตุ::")
 st.write("MA  = หส.ปริญญาโท สาขาคุณภาพชชีวิตคนพิการ")
 st.write("MEd = หส.ปริญญาโท สาขาการศึกษาพิเศษ")

@@ -212,6 +212,40 @@ def faculty_members():
     'ภัทรานิษฐ สงประชา']
     return names
 
+def get_thesis_progression_summary(theses):
+    order = ['สอบโครงร่างแล้ว',
+            'อยู่ระหว่างขอ IRB',
+            'กำลังเก็บข้อมูล',
+            'อยู่ระหว่างการวิเคราะห์ข้อมูล',
+            'สอบป้องกันวิทยานิพนธ์แล้ว',
+            'อยู่ระหว่างรอเผยแพร่วิทยานิพนธ์']
+
+    # rename the long column name to 'สถานะ' if necessary
+    for i in theses.columns:
+            if 'สถานะของความก้าวหน้า' in i:
+                theses = theses.rename(columns={i:'สถานะ'})
+                break
+
+    # rename the long program names to short codes
+    Table = defaultdict(lambda:defaultdict(list))
+    for (c,s,p) in zip(theses['รหัส (นักศึกษา)'],theses['สถานะ'],theses['หลักสูตร']):
+        if      p == 'ปริญญาเอก-ปรัชญาดุษฎีบัณฑิต สาขาวิชาการพัฒนาคุณภาพชีวิตคนพิการ': p = 'PhD[QL]'
+        elif    p == 'ปริญญาโท-ศิลปศาสตรมหาบัณฑิต สาขาวิชาการพัฒนาคุณภาพชีวิตคนพิการ': p = 'MA[QL]'
+        elif    p == 'ปริญญาโท-ศึกษาศาสตรมหาบัณฑิต สาขาวิชาการศึกษาสำหรับบุคคลที่มีความต้องการพิเศษ': p = 'MA[Ed]'
+        Table[c[:2]][s].append(p)
+
+    new_table = defaultdict(lambda:defaultdict(str))
+    for c,ss in Table.items():
+        for s,p in ss.items():
+            new_table[c][s] = f"{p[0]}x{len(p)}"
+    n = pd.DataFrame(new_table).T.fillna(0)
+
+    # reoder columns
+    N = []
+    for o in order:
+        if o in n.columns:
+            N.append(n[o])
+    return pd.concat(N, axis=1)
 
 def get_thesis_workload_new(theses):
     theses = theses.drop_duplicates(subset=['รหัส (นักศึกษา)'], keep='last')
