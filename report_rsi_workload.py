@@ -76,11 +76,13 @@ B = pd.DataFrame(get_thesis_workload_new(theses)).T
 st.write(B)
 
 st.subheader("4. ภาพรวมความก้าวหน้าวิทยานิพนธ์ของนักศึกษา")
-st.write(get_thesis_progression_summary(theses))
-st.write("หมายเหตุ::")
+N = get_thesis_progression_summary(theses)
+A = pd.concat(N, axis=1)
+st.write(A)
+st.write("หมายเหตุ:")
 st.write("MA  = หส.ปริญญาโท สาขาคุณภาพชชีวิตคนพิการ")
 st.write("MEd = หส.ปริญญาโท สาขาการศึกษาพิเศษ")
 st.write("PhD = หส.ปรัชญาดุษฎีบัณฑิต สาขาคุณภาพชีวิตคนพิการ")
 
-pd.DataFrame.to_csv(t1,'teaching_hours.csv',index=False)
-pd.DataFrame.to_csv(t2,'teaching_courses_responsibility.csv',index=False)
+# pd.DataFrame.to_csv(t1,'teaching_hours.csv',index=False)
+# pd.DataFrame.to_csv(t2,'teaching_courses_responsibility.csv',index=False)

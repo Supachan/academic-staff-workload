@@ -238,14 +238,14 @@ def get_thesis_progression_summary(theses):
     for c,ss in Table.items():
         for s,p in ss.items():
             new_table[c][s] = f"{p[0]}x{len(p)}"
-    n = pd.DataFrame(new_table).T.fillna(0)
+    n = pd.DataFrame(new_table).T.fillna('-')
 
     # reoder columns
     N = []
     for o in order:
         if o in n.columns:
             N.append(n[o])
-    return pd.concat(N, axis=1)
+    return N
 
 def get_thesis_workload_new(theses):
     theses = theses.drop_duplicates(subset=['รหัส (นักศึกษา)'], keep='last')
