@@ -24,7 +24,7 @@ theses_url      = "https://docs.google.com/spreadsheets/d/1NrR5_OKyydIklO2UPBwHY
 F = pd.read_csv(mm3_url)
 publication = pd.read_csv(publication_url).fillna("")
 theses = pd.read_csv(theses_url).fillna("")
-
+theses = theses.drop_duplicates(subset=['รหัส (นักศึกษา)'], keep='last')
 
 
 
