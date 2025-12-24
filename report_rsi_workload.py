@@ -16,7 +16,7 @@ matplotlib.rc('font', family='Sarabun')
 
 from rsi_modules import *
 
-def main_inside():
+def main_inside(aca_year,semester):
     mm3_url         = "https://docs.google.com/spreadsheets/d/1NrR5_OKyydIklO2UPBwHYdqI0Y_x1CaQxrie4OTFaDs/export?format=csv&gid=1475905714"
     publication_url = "https://docs.google.com/spreadsheets/d/1NrR5_OKyydIklO2UPBwHYdqI0Y_x1CaQxrie4OTFaDs/export?format=csv&gid=2125519370"
     theses_url      = "https://docs.google.com/spreadsheets/d/1NrR5_OKyydIklO2UPBwHYdqI0Y_x1CaQxrie4OTFaDs/export?format=csv&gid=609352385"
@@ -27,20 +27,20 @@ def main_inside():
     theses = theses.drop_duplicates(subset=['รหัส (นักศึกษา)'], keep='last')
 
     # website:
-    st.title('ภาระงานของคณาจารย์ในสถาบันราชสุดาปีการศึกษา 2568')
+    # st.title('ภาระงานของคณาจารย์ในสถาบันราชสุดาปีการศึกษา 2568')
 
-    st.subheader("1. ชั่วโมงสอนและจำนวนวิชาที่รับผิดชอบ")
+    # st.subheader("1. ชั่วโมงสอนและจำนวนวิชาที่รับผิดชอบ")
 
-    academic_year = st.radio(
-        "เลือกเทอมและปีการศึกษา",
-        ["2568/1", "2568/2"], index=1)
+    # academic_year = st.radio(
+    #     "เลือกเทอมและปีการศึกษา",
+    #     ["2568/1", "2568/2"], index=1)
 
-    if academic_year == "2568/1":
-        aca_year = 'ปีการศึกษา (เทอม) [2568]'
-        semester   = 'เทอม 1'
-    elif academic_year == "2568/2":
-        aca_year = 'ปีการศึกษา (เทอม) [2568]'
-        semester   = 'เทอม 2'
+    # if academic_year == "2568/1":
+    #     aca_year = 'ปีการศึกษา (เทอม) [2568]'
+    #     semester   = 'เทอม 1'
+    # elif academic_year == "2568/2":
+    #     aca_year = 'ปีการศึกษา (เทอม) [2568]'
+    #     semester   = 'เทอม 2'
 
     f = F[F[aca_year]==semester]
     f = f.drop_duplicates(subset=['รหัสวิชา'], keep='last')
@@ -63,7 +63,7 @@ def main_inside():
     st.write("MA  = หส.ปริญญาโท สาขาคุณภาพชชีวิตคนพิการ")
     st.write("MEd = หส.ปริญญาโท สาขาการศึกษาพิเศษ")
     st.write("PhD = หส.ปรัชญาดุษฎีบัณฑิต สาขาคุณภาพชีวิตคนพิการ")
-    
+
 
     # pd.DataFrame.to_csv(t1,'teaching_hours.csv',index=False)
     # pd.DataFrame.to_csv(t2,'teaching_courses_responsibility.csv',index=False)
@@ -71,8 +71,22 @@ def main_inside():
 def main():
     # solution: https://discuss.streamlit.io/t/there-is-a-way-to-make-my-webapp-continuously-active/27556
     blabla=True
+    st.title('ภาระงานของคณาจารย์ในสถาบันราชสุดาปีการศึกษา 2568')
+
+    st.subheader("1. ชั่วโมงสอนและจำนวนวิชาที่รับผิดชอบ")
+
+    academic_year = st.radio(
+        "เลือกเทอมและปีการศึกษา",
+        ["2568/1", "2568/2"], index=1)
+
+    if academic_year == "2568/1":
+        aca_year = 'ปีการศึกษา (เทอม) [2568]'
+        semester   = 'เทอม 1'
+    elif academic_year == "2568/2":
+        aca_year = 'ปีการศึกษา (เทอม) [2568]'
+        semester   = 'เทอม 2'
     while blabla == True:
-        main_inside()
+        main_inside(aca_year,semester)
 
 if __name__ == "__main__":
     main()
