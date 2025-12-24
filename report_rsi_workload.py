@@ -36,13 +36,13 @@ def main_inside():
         ["2568/1", "2568/2"], index=1)
 
     if academic_year == "2568/1":
-        start_date = '8/5/2025'
-        end_date   = '9/19/2025'
+        aca_year = 'ปีการศึกษา (เทอม) [2568]'
+        semester   = 'เทอม 1'
     elif academic_year == "2568/2":
-        start_date = '12/12/2025'
-        end_date   = '12/30/2025'
+        aca_year = 'ปีการศึกษา (เทอม) [2568]'
+        semester   = 'เทอม 2'
 
-    f = F[F['Timestamp'].between(start_date, end_date)]
+    f = F[F[aca_year]==semester]
     f = f.drop_duplicates(subset=['รหัสวิชา'], keep='last')
     t1,t2 = report_mm3(f)
 
