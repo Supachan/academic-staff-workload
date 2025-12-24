@@ -63,6 +63,7 @@ def main_inside():
     st.write("MA  = หส.ปริญญาโท สาขาคุณภาพชชีวิตคนพิการ")
     st.write("MEd = หส.ปริญญาโท สาขาการศึกษาพิเศษ")
     st.write("PhD = หส.ปรัชญาดุษฎีบัณฑิต สาขาคุณภาพชีวิตคนพิการ")
+    
 
     # pd.DataFrame.to_csv(t1,'teaching_hours.csv',index=False)
     # pd.DataFrame.to_csv(t2,'teaching_courses_responsibility.csv',index=False)
