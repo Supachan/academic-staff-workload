@@ -26,26 +26,6 @@ publication = pd.read_csv(publication_url).fillna("")
 theses = pd.read_csv(theses_url).fillna("")
 theses = theses.drop_duplicates(subset=['รหัส (นักศึกษา)'], keep='last')
 
-# new = defaultdict(lambda:defaultdict(list))
-
-# for degree_interest in ['ศิลปศาสตร','ศึกษา','ปริญญาเอก']:
-#     re,rea,ret,rep = get_thesis_workload(theses,degree_interest)
-#     dd = pd.DataFrame(rep).T.fillna('-')
-#     dd = dd.reset_index().rename(columns={'index':'ปีการศึกษา'})
-#     dd = change_degree_name(dd)
-#     new = collect_cells(new,dd)
-
-# new = grouping_programs(new)
-# A = pd.DataFrame(new).T.fillna('-').reset_index().rename(columns={'index':'ปีการศึกษา'})
-# A.sort_values(by='ปีการศึกษา', inplace=True)
-# A = pd.concat([A['ปีการศึกษา'],
-#                A['สอบโครงร่างแล้ว'],
-#                A['อยู่ระหว่างขอ IRB'],
-#                A['กำลังเก็บข้อมูล'],
-#                A['อยู่ระหว่างการวิเคราะห์ข้อมูล'],
-#             #    A['สอบป้องกันวิทยานิพนธ์แล้ว'],
-#                A['อยู่ระหว่างรอเผยแพร่วิทยานิพนธ์']],axis=1)
-
 # website:
 st.title('ภาระงานของคณาจารย์ในสถาบันราชสุดาปีการศึกษา 2568')
 
