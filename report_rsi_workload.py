@@ -44,6 +44,7 @@ elif academic_year == "2568/2":
     end_date   = '12/30/2025'
 
 f = F[F['Timestamp'].between(start_date, end_date)]
+f = f.drop_duplicates(subset=['รหัสวิชา'], keep='last')
 t1,t2 = report_mm3(f)
 
 st.subheader("2. ผลงานตีพิมพ์ทางวิชาการในแต่ละปี")

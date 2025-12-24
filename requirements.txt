@@ -6,3 +6,4 @@ pyarrow
 gspread
 oauth2client
 requests
+pythainlp

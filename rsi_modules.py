@@ -10,7 +10,7 @@ import matplotlib
 import matplotlib.font_manager as fm
 from os import path
 from matplotlib.pyplot import figure
-
+# from pythainlp.util import thai_digit_to_arabic_digit
 
 def summarize_course_units(f):
     units = pd.concat([     f["จำนวน หน่วยกิต (ทฤษฎี-ปฏิบัติ-เรียนรู้ด้วยตนเอง) [หน่วยกิต]"],
@@ -145,6 +145,9 @@ def courses(f):
         #                     # 'รมศษ ๓๓๑',  # จะต้องส่ง มม3 ให้พี่สาวกรอกใหม่ # หายไป 2 ชั่วโมง (มีสอบกลางภาค-ปลายภาค) และอัพเดทโจ๊ก
         #                     # 'รมศษ ๑๗๐',  # หายไป 1 ชั่วโมง
         #                     ]:
+            # print(p, ci)
+            # ci = thai_digit_to_arabic_digit(ci)
+
             fdi = extract_non_empty_cells(f,ci)
             # ดึงชั่วโมงบรรยาย
             hr_lecture = int(fdi[fdi['items']=="จำนวน หน่วยกิต (ทฤษฎี-ปฏิบัติ-เรียนรู้ด้วยตนเอง) [ทฤษฎี]"]['data'].to_numpy()[0])
