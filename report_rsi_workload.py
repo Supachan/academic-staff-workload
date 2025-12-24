@@ -33,8 +33,7 @@ def main_inside():
 
     academic_year = st.radio(
         "เลือกเทอมและปีการศึกษา",
-        ["2568/1", "2568/2"],
-    )
+        ["2568/1", "2568/2"], key="2568/1")
 
     if academic_year == "2568/1":
         start_date = '8/5/2025'
