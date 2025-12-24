@@ -70,24 +70,24 @@ def main_inside(aca_year,semester):
 
 def main():
     # solution: https://discuss.streamlit.io/t/there-is-a-way-to-make-my-webapp-continuously-active/27556
-    blabla=True
-    while blabla == True:
-        st.title('ภาระงานของคณาจารย์ในสถาบันราชสุดาปีการศึกษา 2568')
+    # blabla=True
+    # while blabla == True:
+    st.title('ภาระงานของคณาจารย์ในสถาบันราชสุดาปีการศึกษา 2568')
 
-        st.subheader("1. ชั่วโมงสอนและจำนวนวิชาที่รับผิดชอบ")
+    st.subheader("1. ชั่วโมงสอนและจำนวนวิชาที่รับผิดชอบ")
 
-        academic_year = st.radio(
-            "เลือกเทอมและปีการศึกษา",
-            ["2568/1", "2568/2"], index=1)
+    academic_year = st.radio(
+        "เลือกเทอมและปีการศึกษา",
+        ["2568/1", "2568/2"], index=1)
 
-        if academic_year == "2568/1":
-            aca_year = 'ปีการศึกษา (เทอม) [2568]'
-            semester   = 'เทอม 1'
-        elif academic_year == "2568/2":
-            aca_year = 'ปีการศึกษา (เทอม) [2568]'
-            semester   = 'เทอม 2'
-        # while blabla == True:
-        main_inside(aca_year,semester)
+    if academic_year == "2568/1":
+        aca_year = 'ปีการศึกษา (เทอม) [2568]'
+        semester   = 'เทอม 1'
+    elif academic_year == "2568/2":
+        aca_year = 'ปีการศึกษา (เทอม) [2568]'
+        semester   = 'เทอม 2'
+    # while blabla == True:
+    main_inside(aca_year,semester)
 
 if __name__ == "__main__":
     main()
