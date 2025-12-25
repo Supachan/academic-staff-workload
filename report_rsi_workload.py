@@ -70,11 +70,7 @@ def main_inside(aca_year,semester):
 
 def main():
     # solution: https://discuss.streamlit.io/t/there-is-a-way-to-make-my-webapp-continuously-active/27556
-    # blabla=True
-    # loop = 1
 
-    # while blabla == True:
-    #     if loop == 1:
     today = date.today()
     st.title('ภาระงานของคณาจารย์ในสถาบันราชสุดาปีการศึกษา 2568')
     st.write("ข้อมูลได้อัพเดทเมื่อวันที่:", today.strftime("%d/%m/%Y"))
@@ -92,9 +88,7 @@ def main():
         semester   = 'เทอม 2'
     # while blabla == True:
     main_inside(aca_year,semester)
-        # else:
-        #     i+=1
-        #     pass
+
 
 if __name__ == "__main__":
     main()
