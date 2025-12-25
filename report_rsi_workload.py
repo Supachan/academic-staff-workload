@@ -72,10 +72,14 @@ def main():
     # solution: https://discuss.streamlit.io/t/there-is-a-way-to-make-my-webapp-continuously-active/27556
     blabla=True
     loop = 1
+    from datetime import date
+
+    today = date.today()
+    # print("Today's date:", today)
     while blabla == True:
         if loop == 1:
             st.title('ภาระงานของคณาจารย์ในสถาบันราชสุดาปีการศึกษา 2568')
-
+            st.write("ข้อมูลได้อัพเดทเมื่อวันที่:", today)
             st.subheader("1. ชั่วโมงสอนและจำนวนวิชาที่รับผิดชอบ")
 
             academic_year = st.radio(
