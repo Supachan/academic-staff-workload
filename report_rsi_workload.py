@@ -77,9 +77,9 @@ def main():
     # print("Today's date:", today)
     while blabla == True:
         if loop == 1:
-            today = date.today()
+            # today = date.today()
             st.title('ภาระงานของคณาจารย์ในสถาบันราชสุดาปีการศึกษา 2568')
-            st.write("ข้อมูลได้อัพเดทเมื่อวันที่:", today.strftime("%d/%m/%Y"))
+            # st.write("ข้อมูลได้อัพเดทเมื่อวันที่:", today.strftime("%d/%m/%Y"))
             st.subheader("1. ชั่วโมงสอนและจำนวนวิชาที่รับผิดชอบ")
 
             academic_year = st.radio(
