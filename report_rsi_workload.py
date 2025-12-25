@@ -4,7 +4,7 @@ import streamlit as st
 import csv
 from collections import defaultdict
 from numpy.random import default_rng as rng
-
+from datetime import date
 import matplotlib.pyplot as plt
 import matplotlib
 import matplotlib.font_manager as fm
@@ -72,13 +72,12 @@ def main():
     # solution: https://discuss.streamlit.io/t/there-is-a-way-to-make-my-webapp-continuously-active/27556
     blabla=True
     loop = 1
-    from datetime import date
 
-    today = date.today()
     
     # print("Today's date:", today)
     while blabla == True:
         if loop == 1:
+            today = date.today()
             st.title('ภาระงานของคณาจารย์ในสถาบันราชสุดาปีการศึกษา 2568')
             st.write("ข้อมูลได้อัพเดทเมื่อวันที่:", today.strftime("%d/%m/%Y"))
             st.subheader("1. ชั่วโมงสอนและจำนวนวิชาที่รับผิดชอบ")
