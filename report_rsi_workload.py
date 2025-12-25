@@ -75,11 +75,12 @@ def main():
     from datetime import date
 
     today = date.today()
+    
     # print("Today's date:", today)
     while blabla == True:
         if loop == 1:
             st.title('ภาระงานของคณาจารย์ในสถาบันราชสุดาปีการศึกษา 2568')
-            st.write("ข้อมูลได้อัพเดทเมื่อวันที่:", today)
+            st.write("ข้อมูลได้อัพเดทเมื่อวันที่:", today.strftime("%d/%m/%Y"))
             st.subheader("1. ชั่วโมงสอนและจำนวนวิชาที่รับผิดชอบ")
 
             academic_year = st.radio(
