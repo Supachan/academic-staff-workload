@@ -45,7 +45,8 @@ def main_inside(aca_year,semester):
     f = F[F[aca_year]==semester]
     f = f.drop_duplicates(subset=['รหัสวิชา'], keep='last')
     t1,t2 = report_mm3(f)
-
+    t1.to_csv('teaching_hours.csv')
+    t2.to_csv('teaching_courses.csv')
     st.subheader("2. ผลงานตีพิมพ์ทางวิชาการในแต่ละปี")
     publication,df = get_publication(publication)
     df = df.reset_index().rename(columns={'index':'ปี'})
