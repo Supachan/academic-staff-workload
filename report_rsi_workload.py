@@ -49,15 +49,18 @@ def main_inside(aca_year,semester):
     st.subheader("2. ผลงานตีพิมพ์ทางวิชาการในแต่ละปี")
     publication,df = get_publication(publication)
     df = df.reset_index().rename(columns={'index':'ปี'})
+    df.to_csv('publication.csv')
     st.write(df)
 
     st.subheader("3. ภาระงานควบคุมวิทยานิพนธ์")
     B = pd.DataFrame(get_thesis_workload_new(theses)).T
+    B.to_csv('thesis_workload.csv')
     st.write(B)
 
     st.subheader("4. ภาพรวมความก้าวหน้าวิทยานิพนธ์ของนักศึกษา")
     N = get_thesis_progression_summary(theses)
     A = pd.concat(N, axis=1)
+    A.to_csv('thesis_progress.csv')
     st.write(A)
     st.write("หมายเหตุ:")
     st.write("MA  = หส.ปริญญาโท สาขาคุณภาพชชีวิตคนพิการ")
