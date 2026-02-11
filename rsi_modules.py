@@ -63,35 +63,37 @@ def get_publications_by_author(publication):
         # Process each author
         for name_col in NAMES:
             role = row.get(name_col, '')
-            if role in ['First Author', 'Corresponding Author']:
+            if role in ['First Author', 'Corresponding Author','EIC']:
+                if role == 'First Author': role = 'FA'
+                elif role == 'Corresponding Author': role = 'CA'
                 # Extract author name from column name
                 author_name = name_col.replace('ชื่ออาจารย์และสถานะผู้แต่งหนังสือ [', '').replace(']', '')
                 # Add publication tuple (year, title, type)
-                author_publications[author_name].append((year, title, pub_type))
+                author_publications[author_name].append((year, pub_type, role, title))
     
     return dict(author_publications)
 
 
 # Export author_pubs to CSV
-def export_author_publications_to_csv(author_pubs, filename='author_publications.csv'):
+def export_author_publications_to_csv(author_pubs, filename):
     """
     Export author publications dictionary to CSV file
     Format: Author, Year, Publication Type, Title
     """
     rows = []
     for author, publications in author_pubs.items():
-        for year, pub_type, title in publications:
+        for year, pub_type, role, title in publications:
             rows.append({
                 'Author': author,
                 'Year': year,
                 'Publication Type': pub_type,
+                'Role': role,
                 'Title': title
             })
     
     df = pd.DataFrame(rows)
-    df = df.rename(columns={"Publication Type":"Title","Title":"Publication Type"})
     df.to_csv(filename, index=False, encoding='utf-8-sig')
-    # print(f"Exported {len(rows)} publications to {filename}")
+    print(f"Exported {len(rows)} publications to {filename}")
     return df
 
 

@@ -1,19 +1,25 @@
-﻿Author,Year,Title,Publication Type
-ดร.วิษณุ นิตยธรรมกุล,2568 (2025),Using Virtual Reality and Conversational AI to Enhance High School Students’ Intentions to Pursue Computer Science: Insights from the CS RMUTT Virtual Tour,Q2
-ดร.วิษณุ นิตยธรรมกุล,2568 (2025),Development of Low-Cost PLC Training Kit for Enhancing Industry-Relevant Skills and Certification: PLC-CertX,Q3
-ดร.วิษณุ นิตยธรรมกุล,2568 (2025),Design of the System Architecture of Competency-Based MOOC Using Microlearning Objects to Facilitate Upskilling and Reskilling for Industrial Workforce: Digital MicroLearn,อื่นๆ
-ราษฏร์ บุญญา,2565 (2022),การพัฒนาบทเรียนอิเล็กทรอนิกส์เพื่อส่งเสริมทักษะการใช้ภาษามือไทยสำหรับนักศึกษาระดับปริญญาตรี,TCI2
-ราษฏร์ บุญญา,2566 (2023),The Development of E-Learning on Topic of Impact of Foreign Education to Thai Deaf Education for Undergraduate Students,TCI1
-ดร.ปกรณ์กิตติ์ ม่วงประสิทธิ์,2564 (2021),"ปกรณ์กิตติ์ ม่วงประสิทธิ์, ศิริณา จิตต์จรัส และอรอุษา ปุณยบุรณะ. (2564). ศาสตร์พระราชากับการพัฒนาการบริหารการศึกษาอย่างยั่งยืน. วารสารศึกษาศาสตร์ มหาวิทยาลัยศิลปากร, 18(2), 21-42.",TCI1
-ดร.ปกรณ์กิตติ์ ม่วงประสิทธิ์,2566 (2023),กิจกรรมการเรียนรู้แบบมีส่วนร่วมอย่างสร้างสรรค์เพื่อพัฒนาคุณภาพชีวิต ของกลุ่มคนพิการและผู้สูงอายุในตำบลดอนแก้ว อำเภอแม่ริม จังหวัดเชียงใหม่. ,TCI1
-ดร.ปกรณ์กิตติ์ ม่วงประสิทธิ์,2567 (2024),การพัฒนารูปแบบการเรียนรู้สู่สังคมคุณธรรมสำหรับนักเรียนในพื้นที่นวัตกรรมการศึกษาเชียงใหม่,TCI1
-ศ.ดร.ทวี  เชื้อสุวรรณทวี,2568 (2025),Advancing vocational education and training for persons with disabilities in Lao PDR: Empowering local initiatives to address a global imperative of inclusion for all. ,Q3
-ศ.ดร.ทวี  เชื้อสุวรรณทวี,2568 (2025),Development of a transition service model for autistic students from inclusive primary to secondary schools,Q2
-ศ.ดร.ทวี  เชื้อสุวรรณทวี,2567 (2024),A closer look at Thailand’s COVID-19 pandemic and its impact on the health and education of children with invisible disabilities,Q1
-ศ.ดร.ทวี  เชื้อสุวรรณทวี,2567 (2024),Problems and needs of persons with disabilities during the COVID-19 pandemic: A survey research,TCI1
-ดร.รติรส จันทรสมดี,2567 (2024),Problems and needs of persons with disabilities during the COVID-19 pandemic: A survey research,TCI1
-รศ.ดร.อาดัม นีละไพจิตร,2568 (2025),นโยบายด้านคนพิการ สู่การพัฒนาการตระหนักรู้ความพิการของผู้ให้บริการในสนามบิน,TCI1
-รศ.ดร.อาดัม นีละไพจิตร,2568 (2025),Jobs for All: Application การจ้างงานคนพิการ ,อื่นๆ
-รศ.ดร.อาดัม นีละไพจิตร,2567 (2024),กลไกการพัฒนาระบบการจ้างงานคนพิการเชิงสังคม ,อื่นๆ
-รศ.ดร.อาดัม นีละไพจิตร,2567 (2024),Jobs Able :แพลตฟอร์มการเตรียมคนพิการ สู่การจ้างงาน,อื่นๆ
-ดร.สุภชาญ ตรัยตรึงศ์สกุล,2569 (2026),Developing a Graph-Paper Embosser for Visually Impaired Students Using User-Centered Design Approach,Q1
+﻿Author,Year,Publication Type,Role,Title
+ดร.วิษณุ นิตยธรรมกุล,2568 (2025),Q2,CA,Using Virtual Reality and Conversational AI to Enhance High School Students’ Intentions to Pursue Computer Science: Insights from the CS RMUTT Virtual Tour
+ดร.วิษณุ นิตยธรรมกุล,2568 (2025),Q3,CA,Development of Low-Cost PLC Training Kit for Enhancing Industry-Relevant Skills and Certification: PLC-CertX
+ดร.วิษณุ นิตยธรรมกุล,2568 (2025),Q3,EIC,The 3D-POD Model for AI-Driven Institutional Transformation and Graduate Employment Readiness in Thailand in Digital Era
+ดร.วิษณุ นิตยธรรมกุล,2568 (2025),Q4,EIC,Online Learner Achievement and Satisfaction on the ThaiMOOC Platform: A Case Study of Digital Media Creation on Online Social Networks
+ดร.วิษณุ นิตยธรรมกุล,2568 (2025),Q3,EIC,Conversational AI-Powered VR Development Model for Tourism Promotion in Thailand: Expert Assessment and Stakeholder Acceptance
+ดร.วิษณุ นิตยธรรมกุล,2568 (2025),อื่นๆ,CA,Design of the System Architecture of Competency-Based MOOC Using Microlearning Objects to Facilitate Upskilling and Reskilling for Industrial Workforce: Digital MicroLearn
+ราษฏร์ บุญญา,2565 (2022),TCI2,FA,การพัฒนาบทเรียนอิเล็กทรอนิกส์เพื่อส่งเสริมทักษะการใช้ภาษามือไทยสำหรับนักศึกษาระดับปริญญาตรี
+ราษฏร์ บุญญา,2566 (2023),TCI1,FA,The Development of E-Learning on Topic of Impact of Foreign Education to Thai Deaf Education for Undergraduate Students
+ดร.ปกรณ์กิตติ์ ม่วงประสิทธิ์,2564 (2021),TCI1,FA,"ปกรณ์กิตติ์ ม่วงประสิทธิ์, ศิริณา จิตต์จรัส และอรอุษา ปุณยบุรณะ. (2564). ศาสตร์พระราชากับการพัฒนาการบริหารการศึกษาอย่างยั่งยืน. วารสารศึกษาศาสตร์ มหาวิทยาลัยศิลปากร, 18(2), 21-42."
+ดร.ปกรณ์กิตติ์ ม่วงประสิทธิ์,2566 (2023),TCI1,EIC,The Scenario of Cooperation for Developing Local Education in the Context of New Normal Education and a Sustainable Society.
+ดร.ปกรณ์กิตติ์ ม่วงประสิทธิ์,2566 (2023),TCI1,FA,กิจกรรมการเรียนรู้แบบมีส่วนร่วมอย่างสร้างสรรค์เพื่อพัฒนาคุณภาพชีวิต ของกลุ่มคนพิการและผู้สูงอายุในตำบลดอนแก้ว อำเภอแม่ริม จังหวัดเชียงใหม่. 
+ดร.ปกรณ์กิตติ์ ม่วงประสิทธิ์,2567 (2024),TCI1,FA,การพัฒนารูปแบบการเรียนรู้สู่สังคมคุณธรรมสำหรับนักเรียนในพื้นที่นวัตกรรมการศึกษาเชียงใหม่
+ศ.ดร.ทวี  เชื้อสุวรรณทวี,2568 (2025),Q3,CA,Advancing vocational education and training for persons with disabilities in Lao PDR: Empowering local initiatives to address a global imperative of inclusion for all. 
+ศ.ดร.ทวี  เชื้อสุวรรณทวี,2568 (2025),Q2,CA,Development of a transition service model for autistic students from inclusive primary to secondary schools
+ศ.ดร.ทวี  เชื้อสุวรรณทวี,2568 (2025),Q4,EIC,Effects of parent-implemented intervention for Thai children with language impairment: A randomized controlled trial
+ศ.ดร.ทวี  เชื้อสุวรรณทวี,2567 (2024),Q1,FA,A closer look at Thailand’s COVID-19 pandemic and its impact on the health and education of children with invisible disabilities
+ศ.ดร.ทวี  เชื้อสุวรรณทวี,2567 (2024),TCI1,FA,Problems and needs of persons with disabilities during the COVID-19 pandemic: A survey research
+ดร.รติรส จันทรสมดี,2567 (2024),TCI1,CA,Problems and needs of persons with disabilities during the COVID-19 pandemic: A survey research
+รศ.ดร.อาดัม นีละไพจิตร,2568 (2025),TCI1,FA,นโยบายด้านคนพิการ สู่การพัฒนาการตระหนักรู้ความพิการของผู้ให้บริการในสนามบิน
+รศ.ดร.อาดัม นีละไพจิตร,2568 (2025),อื่นๆ,FA,Jobs for All: Application การจ้างงานคนพิการ 
+รศ.ดร.อาดัม นีละไพจิตร,2567 (2024),TCI1,EIC,ผลของโปรแกรมการให้คำปรึกษารายบุคคลแบบออนไลน์ต่อการปรับตัวของผู้ดูแลผู้ป่วยโรคหลอดเลือดสมอง
+รศ.ดร.อาดัม นีละไพจิตร,2567 (2024),อื่นๆ,FA,กลไกการพัฒนาระบบการจ้างงานคนพิการเชิงสังคม 
+รศ.ดร.อาดัม นีละไพจิตร,2567 (2024),อื่นๆ,FA,Jobs Able :แพลตฟอร์มการเตรียมคนพิการ สู่การจ้างงาน
+ดร.สุภชาญ ตรัยตรึงศ์สกุล,2569 (2026),Q1,FA,Developing a Graph-Paper Embosser for Visually Impaired Students Using User-Centered Design Approach
