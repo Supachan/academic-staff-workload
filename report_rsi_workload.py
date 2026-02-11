@@ -48,6 +48,10 @@ def main_inside(aca_year,semester):
     t1.to_csv('teaching_hours.csv')
     t2.to_csv('teaching_courses.csv')
     st.subheader("2. ผลงานตีพิมพ์ทางวิชาการในแต่ละปี")
+
+    author_pubs = get_publications_by_author(publication)
+    df_export = export_author_publications_to_csv(author_pubs, 'author_publications.csv')
+
     publication,df = get_publication(publication)
 
     blanktable = classify_publication(publication)

@@ -13,6 +13,86 @@ from matplotlib.pyplot import figure
 # from pythainlp.util import thai_digit_to_arabic_digit
 
 
+def get_publications_by_author(publication):
+    """
+    Create a dictionary where:
+    - Key: author name (First Author or Corresponding Author)
+    - Value: list of tuples (year, title, publication_type)
+    """
+    
+    # Find author columns
+    NAMES = []
+    for n in publication.columns:
+        if 'ชื่ออาจารย์และสถานะผู้แต่งหนังสือ' in n:
+            NAMES.append(n)
+    
+    # Rename journal/conference columns for easier processing
+    pub_copy = publication.copy()
+    for t in pub_copy.columns:
+        if 'วารสารไทย (TCI1-TCI2)' in t: 
+            pub_copy.rename(columns={t:'วารสารไทย'}, inplace=True)
+        elif 'วารสารนานาชาติ (Q1-Q4 หรืออื่นๆ)' in t: 
+            pub_copy.rename(columns={t:'วารสารนานาชาติ'}, inplace=True)
+        elif 'ประชุมวิชาการระดับนานาชาติ' in t: 
+            pub_copy.rename(columns={t:'ประชุมวิชาการระดับนานาชาติ'}, inplace=True)
+        elif 'ประชุมวิชาการระดับชาติ' in t: 
+            pub_copy.rename(columns={t:'ประชุมวิชาการระดับชาติ'}, inplace=True)
+    
+    author_publications = defaultdict(list)
+    
+    # Get year and title columns
+    year_col = 'ปีที่ตีพิมพ์ พศ. (คศ.)'
+    title_col = 'ชื่อเรื่อง'
+    
+    # Process each row
+    for idx, row in pub_copy.iterrows():
+        year = row.get(year_col, '')
+        title = row.get(title_col, '')
+        
+        # Determine publication type (Q or TCI category)
+        pub_type = 'อื่นๆ'
+        for category in ['Q1', 'Q2', 'Q3', 'Q4', 'TCI1', 'TCI2']:
+            combined_text = (str(row.get('วารสารไทย', '')) + 
+                           str(row.get('วารสารนานาชาติ', '')) +
+                           str(row.get('ประชุมวิชาการระดับนานาชาติ', '')) +
+                           str(row.get('ประชุมวิชาการระดับชาติ', '')))
+            if category in combined_text:
+                pub_type = category
+                break
+        
+        # Process each author
+        for name_col in NAMES:
+            role = row.get(name_col, '')
+            if role in ['First Author', 'Corresponding Author']:
+                # Extract author name from column name
+                author_name = name_col.replace('ชื่ออาจารย์และสถานะผู้แต่งหนังสือ [', '').replace(']', '')
+                # Add publication tuple (year, title, type)
+                author_publications[author_name].append((year, title, pub_type))
+    
+    return dict(author_publications)
+
+
+# Export author_pubs to CSV
+def export_author_publications_to_csv(author_pubs, filename='author_publications.csv'):
+    """
+    Export author publications dictionary to CSV file
+    Format: Author, Year, Publication Type, Title
+    """
+    rows = []
+    for author, publications in author_pubs.items():
+        for year, pub_type, title in publications:
+            rows.append({
+                'Author': author,
+                'Year': year,
+                'Publication Type': pub_type,
+                'Title': title
+            })
+    
+    df = pd.DataFrame(rows)
+    df.to_csv(filename, index=False, encoding='utf-8-sig')
+    print(f"Exported {len(rows)} publications to {filename}")
+    return df
+
 
 def classify_publication(publication):  
 
