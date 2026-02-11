@@ -49,6 +49,10 @@ def main_inside(aca_year,semester):
     t2.to_csv('teaching_courses.csv')
     st.subheader("2. ผลงานตีพิมพ์ทางวิชาการในแต่ละปี")
     publication,df = get_publication(publication)
+
+    blanktable = classify_publication(publication)
+    blanktable.to_csv('publication_classified.csv')
+    
     df = df.reset_index().rename(columns={'index':'ปี'})
     df = df.rename(columns={'':'อื่นๆ (Conference)'})
     df = df.rename(columns={'อื่นๆ':'อื่นๆ (Journal)'})

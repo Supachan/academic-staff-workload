@@ -12,6 +12,51 @@ from os import path
 from matplotlib.pyplot import figure
 # from pythainlp.util import thai_digit_to_arabic_digit
 
+
+
+def classify_publication(publication):  
+
+    NAMES = []
+    for n in publication.columns:
+        if 'ชื่ออาจารย์และสถานะผู้แต่งหนังสือ' in n:
+            NAMES.append(n) 
+
+    for t in publication.columns:
+        if 'วารสารไทย (TCI1-TCI2)' in t: publication.rename(columns={t:'วารสารไทย'}, inplace=True)
+        elif 'วารสารนานาชาติ (Q1-Q4 หรืออื่นๆ)' in t: publication.rename(columns={t:'วารสารนานาชาติ'}, inplace=True)
+        elif 'ประชุมวิชาการระดับนานาชาติ' in t: publication.rename(columns={t:'ประชุมวิชาการระดับนานาชาติ'}, inplace=True)
+        elif 'ประชุมวิชาการระดับชาติ' in t: publication.rename(columns={t:'ประชุมวิชาการระดับชาติ'}, inplace=True)
+
+    name_paper = defaultdict(list)
+    for name in NAMES:
+        papers = []
+        for i,(role,TCI,Q,conf_int,conf_nat) in enumerate(zip(publication[name],
+                                                            publication['วารสารไทย'],
+                                                            publication['วารสารนานาชาติ'],
+                                                            publication['ประชุมวิชาการระดับนานาชาติ'],
+                                                            publication['ประชุมวิชาการระดับชาติ'])):
+            if role in ['First Author', 'Corresponding Author']:
+                papers+=[TCI+Q+conf_int+conf_nat]
+        name_paper[name.replace('ชื่ออาจารย์และสถานะผู้แต่งหนังสือ [','').replace(']','')] = papers
+
+    categories = ['Q1','Q2','Q3','Q4','TCI1','TCI2','อื่นๆ']
+    blanktable = pd.DataFrame(np.zeros((len(name_paper.keys()), len(categories)),dtype=int), columns=categories)
+    blanktable['name']=name_paper.keys()
+
+
+    for idx, (name, papers) in enumerate(name_paper.items()):
+        for paper in papers:
+            for cat in categories:
+                if cat in paper:
+                    blanktable.loc[idx, cat] += 1
+    
+    # Reorder columns with 'name' first
+    blanktable = blanktable[['name'] + [col for col in blanktable.columns if col != 'name']]
+    
+    # blanktable.to_csv('publication_classified.csv')
+
+    return blanktable
+
 def summarize_course_units(f):
     units = pd.concat([     f["จำนวน หน่วยกิต (ทฤษฎี-ปฏิบัติ-เรียนรู้ด้วยตนเอง) [หน่วยกิต]"],
                                     f["จำนวน หน่วยกิต (ทฤษฎี-ปฏิบัติ-เรียนรู้ด้วยตนเอง) [ทฤษฎี]"],
