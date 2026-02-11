@@ -89,8 +89,9 @@ def export_author_publications_to_csv(author_pubs, filename='author_publications
             })
     
     df = pd.DataFrame(rows)
+    df = df.rename(columns={"Publication Type":"Title","Title":"Publication Type"})
     df.to_csv(filename, index=False, encoding='utf-8-sig')
-    print(f"Exported {len(rows)} publications to {filename}")
+    # print(f"Exported {len(rows)} publications to {filename}")
     return df
 
 
