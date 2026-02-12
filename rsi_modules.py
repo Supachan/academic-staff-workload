@@ -140,6 +140,37 @@ def classify_publication(publication):
 
     return blanktable
 
+
+def remove_empty_columns(F):
+    f = F.drop_duplicates(subset=['รหัสวิชา'], keep='last')
+    f.dropna(how='all', axis=1, inplace=True)
+    return f
+
+def merge_multiple_academic_years(f):
+    new = defaultdict(list)
+    for fi in f.columns:
+        if "ปีการศึกษา (เทอม)" in fi:
+            f[fi].fillna("0")
+            text = fi.split("ปีการศึกษา (เทอม) ")[1]
+            for fii in f[fi]:
+                if fii != '0': new[text].append(f'{text}-{fii}')
+                else: new[text].append('0')
+            for i,n in enumerate(new[text]):
+                if 'nan' in n: new[text][i]=np.nan
+    # merge years into a single column
+    expand = defaultdict(str)
+    for n in new.keys():
+        for i,nn in enumerate(new[n]):
+            expand[i]+=str(nn)
+
+    for i,e in expand.items():
+        expand[i] = e.replace('nan','')
+
+    f['academic_year'] = expand.values()
+    f.to_csv('course_list.csv')
+    return f
+
+
 def summarize_course_units(f):
     units = pd.concat([     f["จำนวน หน่วยกิต (ทฤษฎี-ปฏิบัติ-เรียนรู้ด้วยตนเอง) [หน่วยกิต]"],
                                     f["จำนวน หน่วยกิต (ทฤษฎี-ปฏิบัติ-เรียนรู้ด้วยตนเอง) [ทฤษฎี]"],
@@ -261,43 +292,85 @@ def complie_mm3(units,lec):
                 name_other_courses[name]+=1
     return owner_courses, num_owner_courses, name_other_courses
 
+
+def calculate_teaching_hours_per_year(courses_year):
+    for yr in courses_year.keys():  
+        ajarn_teach_hr = defaultdict(float)
+        for name_hr in courses_year[yr]:
+            for name, hr in name_hr.items():
+                ajarn_teach_hr[name]+=hr
+        courses_year[yr]=ajarn_teach_hr
+    return courses_year
+
+# def courses(f):
+#     cols  = f.keys()
+#     data = defaultdict(lambda:defaultdict(list))
+#     lec  = defaultdict(lambda:defaultdict(float))
+#     courses_year = defaultdict(list)
+#     # ดึงทีละวิชา
+#     for p,ci in enumerate(f["รหัสวิชา"]):
+#         # print(f'---------{ci.strip()}-----------')
+#         # if ci.strip() in [
+#         #                     # 'รมศษ ๑๐๒',  # หายไป 2 ชั่วโมง (มีสอบกลางภาค-ปลายภาค)
+#         #                     # 'รมศษ ๓๓๑',  # จะต้องส่ง มม3 ให้พี่สาวกรอกใหม่ # หายไป 2 ชั่วโมง (มีสอบกลางภาค-ปลายภาค) และอัพเดทโจ๊ก
+#         #                     # 'รมศษ ๑๗๐',  # หายไป 1 ชั่วโมง
+#         #                     ]:
+#             # print(p, ci)
+#             # ci = thai_digit_to_arabic_digit(ci)
+
+#             fdi = extract_non_empty_cells(f,ci)
+#             # ดึงชั่วโมงบรรยาย
+#             hr_lecture = int(fdi[fdi['items']=="จำนวน หน่วยกิต (ทฤษฎี-ปฏิบัติ-เรียนรู้ด้วยตนเอง) [ทฤษฎี]"]['data'].to_numpy()[0])
+#             # ดึงผู้สอนหลัก
+#             fdii = fdi.loc[(fdi['data'] == 'ผู้สอนหลัก') | (fdi['data'] == 'ผู้สอนหลัก, ผู้ปฏิบัติ')].reset_index(drop=True)
+#             for i in range(1,17):
+#                 J = [j for j in fdii['items'] if f'(คาบที่ {i})' in j]
+#                 if len(J) > 0:
+#                     data[i][ci] = hr_lecture/len(J)
+#                     for jj in J:
+#                         lec[ci][jj.split('[')[1].split(']')[0]]+=hr_lecture/len(J)
+#                 else:
+#                     data[i][ci] = 0
+#             # fdi.replace(r'^\s*$', np.nan, regex=True, inplace=True)
+#             # fdi.dropna(how='any').to_csv(f'วิชา {ci.strip()}.csv')
+
+#             if 'รมคพ 705' in ci: lec = special_hr_705(lec,ci)
+
+#     yr_term = fdi[fdi['items']=="academic_year"]['data'].to_numpy()[0]
+#     courses_year[yr_term]=lec
+#     # calculate_lect_hr_per_course(lec)
+
+#     # collect_programs(lec)
+#     return lec
+
 def courses(f):
     cols  = f.keys()
     data = defaultdict(lambda:defaultdict(list))
-    lec   = defaultdict(lambda:defaultdict(float))
+    lec  = defaultdict(lambda:defaultdict(float))
+    courses_year = defaultdict(list)
     # ดึงทีละวิชา
     for p,ci in enumerate(f["รหัสวิชา"]):
-        # print(f'---------{ci.strip()}-----------')
-        # if ci.strip() in [
-        #                     # 'รมศษ ๑๐๒',  # หายไป 2 ชั่วโมง (มีสอบกลางภาค-ปลายภาค)
-        #                     # 'รมศษ ๓๓๑',  # จะต้องส่ง มม3 ให้พี่สาวกรอกใหม่ # หายไป 2 ชั่วโมง (มีสอบกลางภาค-ปลายภาค) และอัพเดทโจ๊ก
-        #                     # 'รมศษ ๑๗๐',  # หายไป 1 ชั่วโมง
-        #                     ]:
-            # print(p, ci)
-            # ci = thai_digit_to_arabic_digit(ci)
+        fdi = extract_non_empty_cells(f,ci)
+        # ดึงเทอมและปีการศึกษา
+        yr_term = fdi[fdi['items']=="academic_year"]['data'].to_numpy()[0]
+        # ดึงชั่วโมงบรรยาย
+        hr_lecture = int(fdi[fdi['items']=="จำนวน หน่วยกิต (ทฤษฎี-ปฏิบัติ-เรียนรู้ด้วยตนเอง) [ทฤษฎี]"]['data'].to_numpy()[0])
+        # ดึงผู้สอนหลัก
+        fdii = fdi.loc[(fdi['data'] == 'ผู้สอนหลัก') | (fdi['data'] == 'ผู้สอนหลัก, ผู้ปฏิบัติ')].reset_index(drop=True)
+        for i in range(1,17):
+            J = [j for j in fdii['items'] if f'(คาบที่ {i})' in j]
+            if len(J) > 0:
+                data[i][ci] = hr_lecture/len(J)
+                for jj in J:
+                    lec[ci][jj.split('[')[1].split(']')[0]]+=hr_lecture/len(J)
+            else:
+                data[i][ci] = 0
 
-            fdi = extract_non_empty_cells(f,ci)
-            # ดึงชั่วโมงบรรยาย
-            hr_lecture = int(fdi[fdi['items']=="จำนวน หน่วยกิต (ทฤษฎี-ปฏิบัติ-เรียนรู้ด้วยตนเอง) [ทฤษฎี]"]['data'].to_numpy()[0])
-            # ดึงผู้สอนหลัก
-            fdii = fdi.loc[(fdi['data'] == 'ผู้สอนหลัก') | (fdi['data'] == 'ผู้สอนหลัก, ผู้ปฏิบัติ')].reset_index(drop=True)
-            for i in range(1,17):
-                J = [j for j in fdii['items'] if f'(คาบที่ {i})' in j]
-                if len(J) > 0:
-                    data[i][ci] = hr_lecture/len(J)
-                    for jj in J:
-                        lec[ci][jj.split('[')[1].split(']')[0]]+=hr_lecture/len(J)
-                else:
-                    data[i][ci] = 0
-            # fdi.replace(r'^\s*$', np.nan, regex=True, inplace=True)
-            # fdi.dropna(how='any').to_csv(f'วิชา {ci.strip()}.csv')
+        if 'รมคพ 705' in ci: lec = special_hr_705(lec,ci)
+        courses_year[yr_term].append(lec[ci])
 
-            if 'รมคพ 705' in ci: lec = special_hr_705(lec,ci)
+    return lec, courses_year
 
-    # calculate_lect_hr_per_course(lec)
-
-    # collect_programs(lec)
-    return lec
 
 def plot_teaching_hours(temp):
     fig = figure(figsize=(6,10))
@@ -424,7 +497,10 @@ def plot_teaching_courses(temp1):
 def report_mm3(f):
 
     units = summarize_course_units(f)
-    lec = courses(f)
+    lec, courses_year = courses(f)
+    courses_year = calculate_teaching_hours_per_year(courses_year)
+    pd.DataFrame(courses_year).fillna(0).to_csv("courses_year.csv", index=False)
+    
     owner_courses, num_owner_courses, name_other_courses = complie_mm3(units,lec)
 
     lec = pd.DataFrame(lec).fillna(0).sum(axis=1).reset_index().rename(columns={'index':'name',0:'hr'})
