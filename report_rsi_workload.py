@@ -22,6 +22,9 @@ def main_inside(aca_year,semester):
     theses_url      = "https://docs.google.com/spreadsheets/d/1NrR5_OKyydIklO2UPBwHYdqI0Y_x1CaQxrie4OTFaDs/export?format=csv&gid=609352385"
 
     F = pd.read_csv(mm3_url)
+    f = remove_empty_columns(F)
+    f = merge_multiple_academic_years(f)
+
     publication = pd.read_csv(publication_url).fillna("")
     theses = pd.read_csv(theses_url).fillna("")
     theses = theses.drop_duplicates(subset=['รหัส (นักศึกษา)'], keep='last')
@@ -42,8 +45,8 @@ def main_inside(aca_year,semester):
     #     aca_year = 'ปีการศึกษา (เทอม) [2568]'
     #     semester   = 'เทอม 2'
 
-    f = F[F[aca_year]==semester]
-    f = f.drop_duplicates(subset=['รหัสวิชา'], keep='last')
+    # f = F[F[aca_year]==semester]
+    # f = f.drop_duplicates(subset=['รหัสวิชา'], keep='last')
     t1,t2 = report_mm3(f)
     t1.to_csv('teaching_hours.csv')
     t2.to_csv('teaching_courses.csv')
