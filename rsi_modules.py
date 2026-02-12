@@ -167,7 +167,7 @@ def merge_multiple_academic_years(f):
         expand[i] = e.replace('nan','')
 
     f['academic_year'] = expand.values()
-    f.to_csv('course_list.csv')
+    # f.to_csv('course_list.csv')
     return f
 
 
@@ -344,7 +344,6 @@ def calculate_teaching_hours_per_year(courses_year):
 #     return lec
 
 def courses(f):
-    cols  = f.keys()
     data = defaultdict(lambda:defaultdict(list))
     lec  = defaultdict(lambda:defaultdict(float))
     courses_year = defaultdict(list)
@@ -368,7 +367,6 @@ def courses(f):
 
         if 'รมคพ 705' in ci: lec = special_hr_705(lec,ci)
         courses_year[yr_term].append(lec[ci])
-
     return lec, courses_year
 
 
@@ -413,7 +411,9 @@ def faculty_members():
     'พชร นิลมณี',
     'สิรินทรา ฤทธิเดช',
     'สร้อยทอง หยกสุริยันต์',
-    'ภัทรานิษฐ สงประชา']
+    'ภัทรานิษฐ สงประชา',
+    'อาจารย์พิเศษ (ภายนอกม.มหิดล)',
+    'อาจารย์พิเศษ (ภายนอกคณะแพทย์ฯรามา ม.มหิดล)']
     return names
 
 def get_thesis_progression_summary(theses):
@@ -499,7 +499,7 @@ def report_mm3(f):
     units = summarize_course_units(f)
     lec, courses_year = courses(f)
     courses_year = calculate_teaching_hours_per_year(courses_year)
-    pd.DataFrame(courses_year).fillna(0).to_csv("courses_year.csv", index=False)
+    
     
     owner_courses, num_owner_courses, name_other_courses = complie_mm3(units,lec)
 
@@ -524,10 +524,10 @@ def report_mm3(f):
             if n in b: sorted_name[b.strip()] = [-h1,h2]
 
     temp1 = pd.DataFrame(sorted_name).T.reset_index().rename(columns={'index':'name',0:"จำนวนวิชาที่รับผิดชอบ", 1:"จำนวนวิชาที่สอน"})
-    plot_teaching_hours(temp)
+    # plot_teaching_hours(temp)
 
-    plot_teaching_courses(temp1)
-    return temp, temp1
+    # plot_teaching_courses(temp1)
+    return temp, temp1, courses_year
 
 def get_publication(publication):
     # publication = get_worksheet(worksheet,3)

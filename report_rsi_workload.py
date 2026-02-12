@@ -29,25 +29,9 @@ def main_inside(aca_year,semester):
     theses = pd.read_csv(theses_url).fillna("")
     theses = theses.drop_duplicates(subset=['รหัส (นักศึกษา)'], keep='last')
 
-    # website:
-    # st.title('ภาระงานของคณาจารย์ในสถาบันราชสุดาปีการศึกษา 2568')
+    t1,t2,courses_year = report_mm3(f)
 
-    # st.subheader("1. ชั่วโมงสอนและจำนวนวิชาที่รับผิดชอบ")
-
-    # academic_year = st.radio(
-    #     "เลือกเทอมและปีการศึกษา",
-    #     ["2568/1", "2568/2"], index=1)
-
-    # if academic_year == "2568/1":
-    #     aca_year = 'ปีการศึกษา (เทอม) [2568]'
-    #     semester   = 'เทอม 1'
-    # elif academic_year == "2568/2":
-    #     aca_year = 'ปีการศึกษา (เทอม) [2568]'
-    #     semester   = 'เทอม 2'
-
-    # f = F[F[aca_year]==semester]
-    # f = f.drop_duplicates(subset=['รหัสวิชา'], keep='last')
-    t1,t2 = report_mm3(f)
+    pd.DataFrame(courses_year).fillna(0).reset_index().to_csv("courses_year.csv", index=False)
     t1.to_csv('teaching_hours.csv')
     t2.to_csv('teaching_courses.csv')
     st.subheader("2. ผลงานตีพิมพ์ทางวิชาการในแต่ละปี")
