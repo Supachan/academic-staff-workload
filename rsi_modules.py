@@ -293,14 +293,14 @@ def complie_mm3(units,lec):
     return owner_courses, num_owner_courses, name_other_courses
 
 
-def calculate_teaching_hours_per_year(courses_year):
-    for yr in courses_year.keys():  
-        ajarn_teach_hr = defaultdict(float)
-        for name_hr in courses_year[yr]:
-            for name, hr in name_hr.items():
-                ajarn_teach_hr[name]+=hr
-        courses_year[yr]=ajarn_teach_hr
-    return courses_year
+# def calculate_teaching_hours_per_year(courses_year):
+#     for yr in courses_year.keys():  
+#         ajarn_teach_hr = defaultdict(float)
+#         for name_hr in courses_year[yr]:
+#             for name, hr in name_hr.items():
+#                 ajarn_teach_hr[name]+=hr
+#         courses_year[yr]=ajarn_teach_hr
+#     return courses_year
 
 # def courses(f):
 #     cols  = f.keys()
@@ -498,7 +498,7 @@ def report_mm3(f):
 
     units = summarize_course_units(f)
     lec, courses_year = courses(f)
-    courses_year = calculate_teaching_hours_per_year(courses_year)
+    # courses_year = calculate_teaching_hours_per_year(courses_year)
     
     
     owner_courses, num_owner_courses, name_other_courses = complie_mm3(units,lec)
@@ -691,32 +691,54 @@ def grouping_programs(new):
             new[y][dk]=sub_collect(dv)
     return new
 
-def faculty_members():
-    names =  ['นพ.สมเกียรติ ลีละศิธร',
-    'พญ.วัชรา ริ้วไพบูลย์',
-    'ศ.ดร.ทวี  เชื้อสุวรรณทวี',
-    'รศ.ดร.อาดัม นีละไพจิตร',
-    'รศ.ดร.ณัฏฐนียา โตรักษา',
-    'ผศ.ดร.อารี ภาวสุทธิไพศิฐ',
-    'ผศ.ดร.ธีรศักดิ์ ศรีสุรกุล',
-    'ผศ.ดร.เจนจิรา เจนจิตรวาณิช',
-    'ดร.รติรส จันทรสมดี',
-    'ดร.อิศวรา ศิริรุ่งเรือง',
-    'ดร.ธรรม จตุนาม',
-    'ดร.รุจิรา สงขาว',
-    'ดร.ปรเมศวร์ บุญยืน',
-    'ดร.ปกรณ์กิตติ์ ม่วงประสิทธิ์',
-    'ดร.สุนันทา ขลิบทอง',
-    'ดร.วรางคณา รัชตะวรรณ',
-    'ดร.ญาณิศา เนียรนาทตระกูล',
-    'ดร.สุภชาญ ตรัยตรึงศ์สกุล',
-    'ดร.วิษณุ นิตยธรรมกุล',
-    'พฤหัส ศุภจรรยา',
-    'ราษฏร์ บุญญา',
-    'กุลยา ไทรงาม',
-    'ณัฐวิชญ์ ศุภสินธุ์',
-    'พชร นิลมณี',
-    'สิรินทรา ฤทธิเดช',
-    'สร้อยทอง หยกสุริยันต์',
-    'ภัทรานิษฐ สงประชา']
-    return names
+
+
+
+def MAIN_report_mm3(F):
+
+
+    def calculate_teaching_hours(courses_year):
+        MEMBERS = pd.DataFrame(faculty_members()).rename(columns={0:'name'})
+        TEACH_TERM = pd.DataFrame(courses_year).fillna(0).reset_index()
+        TEACH_TERM.rename(columns={'index':'name'}, inplace=True)
+        Member_Teaching_hrs = MEMBERS.merge(TEACH_TERM, on='name', how='left').fillna(0)
+        return Member_Teaching_hrs
+
+
+    def identify_course_code_owner(course_owners):
+        course_code_owner = defaultdict(list)
+        for n,cw in zip(course_owners['name'],course_owners['owner_courses']):
+            course_code = defaultdict(list)
+            for c in cw:
+                course_code[c[1]].append(c[0])
+            course_code_owner[n] = course_code
+        course_code_owner = pd.DataFrame(course_code_owner).T.fillna('0').reset_index().rename(columns={'index':'name'})
+        course_code_owner = MEMBERS.merge(course_code_owner, on='name', how='left').fillna(0)
+        return course_code_owner
+
+    def count_owner_courses(course_code_owner):
+        number_course_code_owner = defaultdict(list)
+        for c in course_code_owner.columns:
+            if c != 'name':
+                for row in course_code_owner[c]:
+                    if row != 0:
+                        number_course_code_owner[c].append(len(row))
+                    else:
+                        number_course_code_owner[c].append(0)
+                # number_course_code_owner[c] = course_code_owner[c]
+        number_course_code_owner = pd.DataFrame(number_course_code_owner)
+        number_course_code_owner['name']= course_code_owner['name']
+
+        Member_Courses = MEMBERS.merge(number_course_code_owner, on='name', how='left').fillna(0)
+        return Member_Courses
+    
+    f = remove_empty_columns(F)
+    f = merge_multiple_academic_years(f)
+    _, courses_year = courses(f)
+    courses_year = calculate_teaching_hours_per_year(courses_year)
+
+    names = defaultdict(list)
+    for aj,co,yr in zip(f['อาจารย์ผู้รับผิดชอบรายวิชา'],f['รหัสวิชา'],f['academic_year']):
+        names[aj].append((co,yr))
+
+    course_owners = pd.DataFrame([names]).T.rename(columns={0:'owner_courses'}).reset_index().rename(columns={'index':'name'})
