@@ -454,7 +454,7 @@ def get_thesis_progression_summary(theses):
 def get_thesis_workload_new(theses):
     theses = theses.drop_duplicates(subset=['รหัส (นักศึกษา)'], keep='last')
     ST = defaultdict(lambda:defaultdict(list))
-    for name in faculty_members():
+    for name in faculty_members()[:-2]:
         List = f'อาจารย์ที่ปรึกษาหลัก /  อาจารย์ที่ปรึกษาร่วม [{name}]'
         a = theses[List].value_counts()
         a = pd.DataFrame(a).reset_index().rename(columns={List:'ad-co'}).iloc[1:]
@@ -539,7 +539,8 @@ def get_publication(publication):
     NatConf = publication.columns[7]
     Role = publication.columns[7]
 
-    lecturers = [n.split('    ')[1] for n in get_sorted_name()[:-2]]
+    # lecturers = [n.split('    ')[1] for n in get_sorted_name()[:-2]]
+    lecturers = faculty_members()[:-2]
 
     rec_year = defaultdict(lambda:defaultdict(int))
     for i,a in enumerate(publication[Year]):
